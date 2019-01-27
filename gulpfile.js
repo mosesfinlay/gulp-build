@@ -1,6 +1,6 @@
 "use strict";
 
-const { task, src, dest, series } = require("gulp");
+const { task, src, dest, series, watch } = require("gulp");
 const concat = require("gulp-concat");
 const uglify = require("gulp-uglify");
 const sass = require("gulp-sass");
@@ -27,7 +27,8 @@ task("styles", () => {
     .pipe(cleanCSS())
     .pipe(rename("all.min.css"))
     .pipe(maps.write("./"))
-    .pipe(dest("dist/styles/"));
+    .pipe(dest("dist/styles/"))
+    .pipe(connect.reload());
 });
 
 task("images", () => {
@@ -37,18 +38,27 @@ task("images", () => {
 });
 
 task("html", () => {
-  connect.server({
-    root: "dist",
-    port: 3000,
-    livereload: true
-  });
-
   return src("index.html")
     .pipe(dest("dist/"));
 });
 
 task("clean", () => del("dist/"));
 
-task("build", series("clean", "scripts", "styles", "images", "html"));
+task("connect", done => {
+  connect.server({
+    root: "dist",
+    port: 3000,
+    livereload: true
+  });
 
-task("default", series("build"));
+  done();
+});
+
+task("watch", done => {
+  watch(["sass/**/*.scss"], series("styles"));
+});
+
+task("serve", series("connect", "watch"));
+
+task("build", series("clean", "scripts", "styles", "images", "html"));
+task("default", series("build", "serve"));
