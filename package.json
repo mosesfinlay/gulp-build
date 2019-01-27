@@ -1,10 +1,14 @@
 {
   "name": "gulp-site",
   "version": "1.0.0",
-  "description": "Front end site using Gulp taskrunner",
+  "description": "Front end site using Gulp task-runner",
   "main": "js/global.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mosesfinlay/gulp-build"
   },
   "keywords": [
     "gulp",
@@ -14,11 +18,15 @@
   "author": "Moses Finlay",
   "license": "GPL-3.0",
   "devDependencies": {
+    "del": "^3.0.0",
     "gulp": "^4.0.0",
     "gulp-clean-css": "^4.0.0",
     "gulp-concat": "^2.6.1",
+    "gulp-connect": "^5.7.0",
+    "gulp-image": "^4.4.1",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.1"
   }
 }
